@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          Role           @default(USER)
+  createdAt     DateTime       @default(now())
+  refreshTokens RefreshToken[]
+  events        Event[]        @relation("OrganizerEvents")
+  bookings      Booking[]
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  location    String
+  category    String
+  startDate   DateTime
+  endDate     DateTime?
+  imageUrl    String?
+  capacity    Int?
+  organizer   User      @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  organizerId String
+  tickets     Ticket[]
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Ticket {
+  id         String @id @default(cuid())
+  event      Event  @relation(fields: [eventId], references: [id])
+  eventId    String
+  tierName   String
+  priceCents Int
+  quantity   Int
+  sold       Int    @default(0)
+  bookings Booking[] // one ticket can have many bookings
+}
+
+model Booking {
+  id      String @id @default(cuid())
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String
+  ticket   Ticket? @relation(fields: [ticketId], references: [id])
+  ticketId String?
+  quantity   Int
+  totalCents Int
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+}
+
+enum Role {
+  USER
+  ORGANIZER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  REFUNDED
+}
