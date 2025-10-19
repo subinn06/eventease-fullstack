@@ -13,8 +13,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // allow your React client origin
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
   credentials: true
 }));
 
