@@ -1,0 +1,114 @@
+.site-header {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.88));
+  border-bottom: 1px solid rgba(15,23,42,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.header-inner {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 20px;
+}
+
+.left {
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.logo {
+  display:inline-block;
+  font-weight:800;
+  font-size:1.25rem;
+  color: #2c68bc;
+  text-decoration:none;
+  letter-spacing:-0.3px;
+}
+
+.main-nav {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-left:8px;
+}
+
+.nav-link {
+  padding:8px 10px;
+  border-radius:10px;
+  color: #0b2447;
+  text-decoration:none;
+  font-weight:600;
+  transition: background 180ms ease, color 180ms ease, transform 160ms ease;
+  font-size:0.95rem;
+}
+
+.nav-link:hover {
+  background: rgba(37,99,235,0.08);
+  color: #0b3e8a;
+  transform: translateY(-2px);
+}
+
+.main-nav .nav-link {
+  padding:8px 12px;
+  border-radius:10px;
+  color: #0b2447;
+  text-decoration:none;
+  font-weight:600;
+  transition: background 180ms ease, color 180ms ease, transform 160ms ease;
+  font-size:0.95rem;
+}
+
+.main-nav .nav-link:hover {
+  background: rgba(37,99,235,0.08);
+  color: #0b3e8a;
+  transform: translateY(-2px);
+}
+
+.right {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.auth-area {
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.user-pill{
+  background: linear-gradient(90deg,#06b6d4,#2563eb);
+  color: white;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:0.9rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(11,36,71,0.06);
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  color: #0b2447;
+  font-weight:600;
+}
+
+@media (max-width: 860px) {
+  .header-inner { padding:10px 14px; }
+  .main-nav { display:none; }
+  .search-input { width:120px; }
+}
+
+@media (max-width: 460px) {
+  .search-compact { display:none; }
+  .logo { font-size:1.05rem; }
+  .user-pill { display:none; }
+}
