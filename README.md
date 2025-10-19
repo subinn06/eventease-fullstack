@@ -2,7 +2,8 @@
 
 EventEase is a fullstack **event booking and management web app** that allows users to discover, create, and book events effortlessly.  
 It includes **user authentication**, **organizer dashboards**, **ticket management**, and **secure booking flow** — all built using **React, Node.js, Express, and Prisma ORM**.
-Live link:
+
+Live link: https://eventease-fullstack.vercel.app
 
 ---
 
