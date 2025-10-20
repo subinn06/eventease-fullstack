@@ -48,14 +48,24 @@ export default function EventDetails() {
   if (loading) return <div className="event-page page-root container"><p>Loading event...</p></div>;
   if (!event) return <div className="event-page page-root container"><p>Event not found</p></div>;
 
-  const cheapest = event.tickets && event.tickets.length ? (event.tickets.reduce((min,t) => t.priceCents < min.priceCents ? t : min, event.tickets[0])) : null;
+  const cheapest = event.tickets && event.tickets.length ? (event.tickets.reduce((min, t) => t.priceCents < min.priceCents ? t : min, event.tickets[0])) : null;
+  
+  let imgUrl = event.imageUrl || '/placeholder.jpg';
+  if (imgUrl.startsWith('http://')) {
+    imgUrl = imgUrl.replace('http://', 'https://');
+  }
 
   return (
     <div className="event-page page-root">
       <div className="container">
         <div className="event-hero-wrap">
           <div className="event-info">
-            <img className="hero card" src={event.imageUrl || '/placeholder.jpg'} alt={event.title} />
+            <img
+              className="hero card"
+              src={imgUrl}
+              alt={event.title}
+              onError={(e) => (e.currentTarget.src = '/placeholder.jpg')}
+            />
             <div style={{ marginTop: 12 }}>
               <h1 style={{ margin: 0 }}>{event.title}</h1>
               <div className="chips" style={{ marginTop: 8 }}>
@@ -73,7 +83,7 @@ export default function EventDetails() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div className="small-muted">From</div>
-                  <div className="price-tag">₹{(cheapest?.priceCents/100 || 0).toFixed(2)}</div>
+                  <div className="price-tag">₹{(cheapest?.priceCents / 100 || 0).toFixed(2)}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontWeight: 700 }}>{event.organizer?.role === 'ORGANIZER' ? 'Organizer' : event.organizer?.name || 'Organizer'}</div>
@@ -98,7 +108,7 @@ export default function EventDetails() {
                           <div style={{ color: 'var(--muted)', fontSize: 13 }}>{left} seats left</div>
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                          <div style={{ fontWeight: 700 }}>₹{(t.priceCents/100).toFixed(2)}</div>
+                          <div style={{ fontWeight: 700 }}>₹{(t.priceCents / 100).toFixed(2)}</div>
                         </div>
                       </div>
                     );
