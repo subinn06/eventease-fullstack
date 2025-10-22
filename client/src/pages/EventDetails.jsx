@@ -50,22 +50,12 @@ export default function EventDetails() {
 
   const cheapest = event.tickets && event.tickets.length ? (event.tickets.reduce((min, t) => t.priceCents < min.priceCents ? t : min, event.tickets[0])) : null;
   
-  let imgUrl = event.imageUrl || '/placeholder.jpg';
-  if (imgUrl.startsWith('http://')) {
-    imgUrl = imgUrl.replace('http://', 'https://');
-  }
-
   return (
     <div className="event-page page-root">
       <div className="container">
         <div className="event-hero-wrap">
           <div className="event-info">
-            <img
-              className="hero card"
-              src={imgUrl}
-              alt={event.title}
-              onError={(e) => (e.currentTarget.src = '/placeholder.jpg')}
-            />
+            <img className="hero card" src={event.imageUrl || '/placeholder.jpg'} alt={event.title} />
             <div style={{ marginTop: 12 }}>
               <h1 style={{ margin: 0 }}>{event.title}</h1>
               <div className="chips" style={{ marginTop: 8 }}>

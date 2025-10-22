@@ -8,7 +8,7 @@ const sanitizeHtml = require('sanitize-html');
 
 const router = express.Router();
 
-const uploadsDir = path.resolve(__dirname, '..', 'uploads');
+const uploadsDir = path.resolve(__dirname, '..', '..', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -38,9 +38,9 @@ const upload = multer({
 // Helper to build absolute file URL
 function buildFileUrl(req, filename) {
   if (!filename) return null;
-  const protocol = req.protocol;
+  const proto = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.get('host');
-  return `${protocol}://${host}/uploads/${encodeURIComponent(filename)}`;
+  return `${proto}://${host}/uploads/${encodeURIComponent(filename)}`;
 }
 
 // Create event - Organizer only

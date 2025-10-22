@@ -32,7 +32,7 @@ app.use(
 );
 
 // serve uploads with cross-origin-embedding allowed
-const uploadsPath = path.join(__dirname, 'uploads');
+const uploadsPath = path.join(__dirname, '..', 'uploads');
 
 app.use(
   '/uploads',
