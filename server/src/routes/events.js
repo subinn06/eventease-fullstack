@@ -38,6 +38,12 @@ const upload = multer({
 // Helper to build absolute file URL
 function buildFileUrl(req, filename) {
   if (!filename) return null;
+
+  if (process.env.SERVER_URL) {
+    const base = process.env.SERVER_URL.replace(/\/$/, '');
+    return `${base}/uploads/${encodeURIComponent(filename)}`;
+  }
+  
   const proto = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.get('host');
   return `${proto}://${host}/uploads/${encodeURIComponent(filename)}`;
